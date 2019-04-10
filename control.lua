@@ -1,8 +1,7 @@
 --Chart Coastline Script
+require ("functions")
 
-function getChunkCoords(x, y)
-    getChunkCoords = { math.floor(x/32),  math.floor(y/32)}
-end
+
 
 local chunkPos
 local surf = game.player.surface 
