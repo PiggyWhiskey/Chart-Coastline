@@ -13,14 +13,14 @@ function find_Coastline(debug)
     local ground_Count
     
     
-    for iChunk = -10, max_Search, -1
+    for iChunk = -10, max_Search, -3
     do
-        chunkBound = get_Chunk_BoundingBox(0, iChunk)
+        chunkBound = get_3x_Chunk_BoundingBox(0, iChunk)
         --It's either water-tile or ground-tile, doesn't require both (Unless Void?)
         ground_Count = get_Ground_Count(chunkBound)
 
-        if ground_Count > 0 and ground_Count < 512 then
-            --Less than 50% Ground, Valid Chunk
+        if ground_Count > 921 and ground_Count < 4608 then
+            --Ground between 10% and 50%, recurse, Valid Chunk
             chart_Coastline(0, ichunk)
             iChunk = max_Search
         end
@@ -33,22 +33,20 @@ function chart_Coastline(x, y)
     local ground_Count
 
     --Chart 3x3
-    for i = -1, 1, 1
-    do
-        for j = -1, 1, 1
-        do
 
-            --Reveal Chunk
-            chart_Chunk(player, game.player.surface, x + i , y + j )
+    --Reveal Chunk
+    chart_Chunk_x3(player, game.player.surface, x , y )
 
-            --Count ground-tile
-            ground_Count get_Ground_Count(get_Chunk_BoundingBox( x + i, y + j ))
+    --Count ground-tile
+    ground_Count = get_Ground_Count(get_3x_Chunk_BoundingBox(x, y))
 
-            --Ground between 0% and 50%, recurse
-            if ground_Count > 0 and ground_Count < 512 then
-                chart_Coastline(x + i, y + j)
-                    
-            end
-        end
+    --Ground between 10% and 50%, recurse
+    if ground_Count > 921 and ground_Count < 4608 then
+
+
+
+        chart_Coastline(x, y)
+
+
     end
 end
